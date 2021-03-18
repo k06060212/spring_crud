@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -52,11 +53,50 @@ public class BoardController {
 		return "redirect:/board/listAll";
 	}
 	
+	// 게시글 리스트
 	@RequestMapping(value = "listAll" ,method = RequestMethod.GET)
 	public void listAll(Model model) throws Exception{
 		
 		logger.info("show all list........");
+		model.addAttribute("list", service.listAll());
 		
 	}
 	
+	// 게시글 조회하기
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, Model model ) throws Exception{
+		
+		model.addAttribute(service.read(bno));
+		
+	}
+	
+	// 삭제 처리
+	@RequestMapping(value = "/remove" , method = RequestMethod.POST)
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception {
+	
+		service.remove(bno);
+		
+		rttr.addFlashAttribute("msg", "success");
+		
+		return "redirect:/board/listAll";
+	}
+	
+	// 글 수정
+	@RequestMapping(value = "/modify" , method = RequestMethod.GET)
+	public void modifyGET(int bno, Model model) throws Exception{
+		
+		model.addAttribute(service.read(bno));
+	}
+
+	@RequestMapping(value = "/modify" , method = RequestMethod.POST)
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception{
+		
+		logger.info("modify post............");
+		
+		service.modify(board);
+		rttr.addFlashAttribute("msg", "success");
+		
+		return "redirect:/board/listAll";
+	}
+
 }
