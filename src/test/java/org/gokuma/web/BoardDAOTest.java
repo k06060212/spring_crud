@@ -1,8 +1,11 @@
 package org.gokuma.web;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.gokuma.domain.BoardVO;
+import org.gokuma.domain.Criteria;
 import org.gokuma.persistence.BoardDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,8 +53,35 @@ public class BoardDAOTest {
 	
 	@Test
 	public void testDelete() throws Exception{
+		dao.delete(2);	
+	}
+	
+	@Test
+	public void testListPage() throws Exception{
 		
-		dao.delete(2);
+		int page = 3;
+		
+		List<BoardVO> list = dao.listPage(page);
+		
+		for(BoardVO boardVO : list) {
+			logger.info(boardVO.getBno() + ":" + boardVO.getTitle());
+		}
+	}
+	
+	@Test
+	public void testListCriteria() throws Exception {
+		
+		Criteria cri = new Criteria();
+		cri.setPage(2);
+		cri.setPerPageNum(20);
+		
+		List<BoardVO> list = dao.listCriteria(cri);
+		
+		for(BoardVO boardVO : list) {
+			
+			logger.info(boardVO.getBno() + ":" + boardVO.getTitle());
+		}
 		
 	}
+	
 }

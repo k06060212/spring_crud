@@ -3,6 +3,7 @@ package org.gokuma.service;
 import java.util.List;
 
 import org.gokuma.domain.BoardVO;
+import org.gokuma.domain.Criteria;
 
 public interface BoardService {
 	
@@ -20,4 +21,8 @@ public interface BoardService {
 	
 	// listAll
 	public List<BoardVO> listAll() throws Exception;
+	
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
+	
+	public int listCountCriteria(Criteria cri) throws Exception;
 }

@@ -5,12 +5,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.gokuma.domain.BoardVO;
+import org.gokuma.domain.Criteria;
+import org.gokuma.domain.PageMaker;
 import org.gokuma.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +65,31 @@ public class BoardController {
 		
 	}
 	
+	// 게시글 페이징
+	@RequestMapping(value = "/listCri" ,method = RequestMethod.GET)
+	public void listAll(Criteria cri,Model model) throws Exception{
+		
+		logger.info("show all list Page with criteria........");
+		model.addAttribute("list", service.listCriteria(cri));
+		
+	}
+	
+	@RequestMapping(value="/listPage", method = RequestMethod.GET)
+	public void listPage(@ModelAttribute("cri")Criteria cri, Model model) throws Exception {
+		
+		logger.info(cri.toString());
+		
+		model.addAttribute("list", service.listCriteria(cri));
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(131);
+		
+		pageMaker.setTotalCount(service.listCountCriteria(cri));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+	}
+	
 	// 게시글 조회하기
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void read(@RequestParam("bno") int bno, Model model ) throws Exception{
@@ -98,5 +126,6 @@ public class BoardController {
 		
 		return "redirect:/board/listAll";
 	}
-
+	
+	
 }

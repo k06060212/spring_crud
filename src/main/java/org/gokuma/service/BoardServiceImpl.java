@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.gokuma.domain.BoardVO;
+import org.gokuma.domain.Criteria;
 import org.gokuma.persistence.BoardDAO;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,20 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return dao.listAll();
 	}
+
+	
+	@Override
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listCriteria(cri);
+	}
+
+	@Override
+	public int listCountCriteria(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.countPaging(cri);
+	}
+	
 	
 	
 }
