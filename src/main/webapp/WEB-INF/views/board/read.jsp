@@ -16,9 +16,7 @@
 				<!-- /.box-header -->
 
 				<form role="form" method="post">
-
 					<input type='hidden' name='bno' value="${boardVO.bno}">
-
 				</form>
 
 				<div class="box-body">
@@ -66,7 +64,7 @@
 						});
 
 						$(".btn-primary").on("click", function() {
-							self.location = "/board/listAll";
+							self.location = "/board/listPage";
 						});
 
 					});

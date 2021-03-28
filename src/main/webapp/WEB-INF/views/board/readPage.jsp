@@ -15,7 +15,11 @@
 				</div>
 				<!-- /.box-header -->
 
-<form role="form" method="post">
+<form role="form" action="modifyPage" method="post">
+		<input type='hidden' name='bno'	value="${boardVO.bno }">
+		<input type='hidden' name='page'	value="${cri.page }">
+		<input type='hidden' name='perPageNum'	value="${cri.perPageNum }">	
+</form>
 
 	<div class="box-body">
 
@@ -55,11 +59,21 @@
 
 		console.log(formObj);
 
-		$(".btn-warning").on("click", function() {
-			self.location = "/board/listPage";
+		$(".btn-warning").on("click", function(){
+			formObj.attr("method", "get");
+			formObj.attr("action", "/board/listPage");
+			formObj.submit();
 		});
-
-		$(".btn-primary").on("click", function() {
+		
+		$(".btn-danger").on("click", function(){
+			formObj.attr("method", "get");
+			formObj.attr("action", "/board/removePage");
+			formObj.submit();
+		});
+		
+		$(".btn-primary").on("click", function(){
+			formObj.attr("method", "get");
+			formObj.attr("action", "/board/modifyPage");
 			formObj.submit();
 		});
 

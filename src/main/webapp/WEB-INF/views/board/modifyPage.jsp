@@ -15,7 +15,9 @@
 				</div>
 				<!-- /.box-header -->
 
-<form role="form" method="post">
+<form role="form" method="post" action="modifyPage">
+<input type='hidden' name='page' value="${cri.page}" }>
+<input type='hidden' name='perPageNum' value="${cri.perPageNum}" }>
 
 	<div class="box-body">
 
@@ -56,7 +58,7 @@
 		console.log(formObj);
 
 		$(".btn-warning").on("click", function() {
-			self.location = "/board/listPage";
+			self.location = "/board/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
 		});
 
 		$(".btn-primary").on("click", function() {

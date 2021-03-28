@@ -15,7 +15,12 @@
 				</div>
 				<!-- /.box-header -->
 
-<form role="form" method="post">
+<form role="form" method="post" action="modifyPage">
+<input type='hidden' name='page' value="${cri.page}" }>
+<input type='hidden' name='perPageNum' value="${cri.perPageNum}" }>
+<input type='hidden' name='searchType' value="${cri.searchType}" }>
+<input type='hidden' name='keyword' value="${cri.keyword}" }>
+
 
 	<div class="box-body">
 
@@ -56,8 +61,8 @@
 		console.log(formObj);
 
 		$(".btn-warning").on("click", function() {
-			self.location = "/board/listPage";
-		});
+			self.location = "/wboard/listPage?page=${cri.page}&perPageNum=${cri.perPageNum}"
+							+"&searchType=${cri.searchType}&keyword=${cri.keyword}";});
 
 		$(".btn-primary").on("click", function() {
 			formObj.submit();

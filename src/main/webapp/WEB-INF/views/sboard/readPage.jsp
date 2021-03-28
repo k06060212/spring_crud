@@ -15,7 +15,13 @@
 				</div>
 				<!-- /.box-header -->
 
-<form role="form" method="post">
+<form role="form" action="modifyPage" method="post">
+		<input type='hidden' name='bno'	value="${boardVO.bno }">
+		<input type='hidden' name='page'	value="${cri.page }">
+		<input type='hidden' name='perPageNum'	value="${cri.perPageNum }">	
+		<input type='hidden' name='searchType'	value="${cri.searchType }">	
+		<input type='hidden' name='keyword'	value="${cri.keyword }">	
+</form>
 
 	<div class="box-body">
 
@@ -45,6 +51,7 @@
 
 <div class="box-footer">
 	<button type="submit" class="btn btn-primary">SAVE</button>
+	<button type="submit" class="btn btn-danger">REMOVE</button>
 	<button type="submit" class="btn btn-warning">CANCEL</button>
 </div>
 
@@ -55,11 +62,20 @@
 
 		console.log(formObj);
 
-		$(".btn-warning").on("click", function() {
-			self.location = "/board/listPage";
+		$(".btn-warning").on("click", function(){
+			formObj.attr("method", "get");
+			formObj.attr("action", "/sboard/modifyPage");
+			formObj.submit();
 		});
-
-		$(".btn-primary").on("click", function() {
+		
+		$(".btn-danger").on("click", function(){
+			formObj.attr("action", "/sboard/removePage");
+			formObj.submit();
+		});
+		
+		$(".btn-primary").on("click", function(){
+			formObj.attr("method", "get");
+			formObj.attr("action", "/sboard/list");
 			formObj.submit();
 		});
 

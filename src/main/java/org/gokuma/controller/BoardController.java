@@ -98,6 +98,13 @@ public class BoardController {
 		
 	}
 	
+	// 게시글 조회하기 전달되는 파라미터 증가, bno, page, perPageNum으로 늘어나서 수정
+	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		
+		model.addAttribute(service.read(bno));
+	}
+	
 	// 삭제 처리
 	@RequestMapping(value = "/remove" , method = RequestMethod.POST)
 	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception {
@@ -106,7 +113,20 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("msg", "success");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
+	}
+	
+	// 삭제 처리 수정
+	@RequestMapping(value = "/removePage" , method = RequestMethod.POST)
+	public String remove(@RequestParam("bno") int bno,Criteria cri, RedirectAttributes rttr) throws Exception {
+	
+		service.remove(bno);
+		
+		rttr.addFlashAttribute("page", cri.getPage());
+		rttr.addFlashAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addFlashAttribute("msg", "success");
+		
+		return "redirect:/board/listPage";
 	}
 	
 	// 글 수정
@@ -124,7 +144,33 @@ public class BoardController {
 		service.modify(board);
 		rttr.addFlashAttribute("msg", "success");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
+	}	
+	
+//	@RequestMapping(value = "/modifyPage" , method = RequestMethod.GET)
+//	public void modifyGET(@RequestParam("bno") int bno,@ModelAttribute("cri") Criteria cri, Model model) throws Exception{
+//		
+//		logger.info("modify post............");
+//		
+//		service.modify(board);
+//		rttr.addFlashAttribute("msg", "success");
+//		
+//		return "redirect:/board/listAll";
+//		
+//		model.addAttribute(service.read(bno));
+//	}
+	
+
+	@RequestMapping(value = "/modifyPage" , method = RequestMethod.GET)
+	public String modifyGET(BoardVO board,Criteria cri, RedirectAttributes rttr) throws Exception{
+		
+		service.modify(board);
+		
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		
+		return "redirect:/board/listPage";
 	}
 	
 	

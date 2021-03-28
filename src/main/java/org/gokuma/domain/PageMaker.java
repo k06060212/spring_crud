@@ -1,5 +1,8 @@
 package org.gokuma.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 	
 	private int totalCount;
@@ -86,6 +89,27 @@ public class PageMaker {
 
 	public Criteria getCri() {
 		return cri;
+	}
+	
+	public String makeQuery(int page) {
+		
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+									  .queryParam("page", page)
+									  .queryParam("perPageNum", cri.getPerPageNum())
+									  .build();		
+		return uriComponents.toUriString();
+	}
+//		검색처리
+	public String makeSearch(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+									  .queryParam("page", page)
+									  .queryParam("perPageNum", cri.getPerPageNum())
+//									  .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+//									  .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+									  .build();		
+									
+
+		return uriComponents.toUriString();
 	}
 
 	@Override
